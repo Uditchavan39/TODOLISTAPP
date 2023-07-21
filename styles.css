@@ -1,0 +1,94 @@
+body{
+    max-width: 1200px !important;
+    background-color: bisque;
+    margin: auto;
+    height: 100%;
+    border-radius: 20px;
+    min-height: 400px;
+}
+h1{
+    text-align: center;
+    color: black;
+    padding-top: 15px;
+}
+html{
+    background-color: white;
+}
+.show_List_todo{
+    border: solid;
+    width: 85%;
+    margin: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: solid;
+    border-radius: 20px;
+}
+.show_data{
+    width: 80%;
+        word-wrap: break-word;
+}
+.delete_button_style{
+    width: 100px;
+    height: 30px;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border: bisque;
+    border-radius: 20px;
+    align-self: center;
+}
+.delete_button_style:hover{
+    background-color: #E3242B;
+}
+.text_box_and_save{
+    justify-content: center;
+   width: auto;
+    margin: auto;
+    align-self: center;
+    text-align: center;
+}
+.save_button_style{
+    width: 100px;
+    height: 30px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border: bisque;
+    border-radius: 20px;
+    align-self: center;
+    margin-right: 10px;
+}
+.save_button_style:hover{
+    background-color: green;
+}
+.edit_button_style{
+    width: 100px;
+    height: 30px;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border: bisque;
+    border-radius: 20px;
+    align-self: center;
+    margin-right: 10px;
+}
+.edit_button_style:hover{
+    background-color: blueviolet;
+}
+.text_box{
+    width: auto;
+    min-width: 300px;
+    height: 30px;
+    margin: 15px;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+}
