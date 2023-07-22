@@ -71,31 +71,26 @@
             <div id="list_view">
             </div>
         </div>
+    <div class="activelogs_backlogs">
+    <div class="activelogs">
+        <h4>Active Logs:</h4>
+       <ul id="active_logs"></ul> 
+    </div>    
+    <div class="backlogs" id="back_logs">
+        <h4>Back Logs:</h4>
+        <h5>Pending:</h5>
+        <ul id="back_logs_pending"></ul> 
+        <h5>Missed:</h5>
+        <ul id="back_logs_missed"></ul> 
+         
     </div>
+</div>
+    </div>
+
     <!-----Text box with save button-->
 
 
-    <div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;">
-        <div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+'
-                onclick="mark_as_done_undone('+i+')">
-            <h2 class="show_data" id="visual_data_here_' + i + '"><s>' + data_arr[i].task + '</s></h2> <button
-                type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_' + i + '"
-                onclick="edit_item(' + i + ')">Edit</button> <button type="submit" name="delete"
-                class="delete_button_style" id="" onclick="delete_item(' + i + ')">Delete</button>
-        </div>
-        <div style="display: flex; flex-direction: row;">
-            <div class="priority">
-                <h4>Priority: '+data_arr[i].priority+'<br>Due Date:'+data_arr[i].duedate+' </h4>
-            </div>
-            <div class="priority">
-                <h4>Category: '+data_arr[i].categories+'<br>
-                    <div class="tags_style" id="tags_add_here_'+i+'">Tags:</div>
-                </h4>
-            </div>
-        </div>
-        
-    </div>
-
+    
     <script src="home.js"></script>
 </body>
 

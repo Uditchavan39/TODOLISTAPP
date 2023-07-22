@@ -17,14 +17,16 @@ function add_item() {
     data_arr.unshift(obj_item);
     show_elements(data_arr);
     document.getElementById("enter_task").value = "";
-    }
+    show_activelogs("Added New Main task.");
+}
 else{
     
     obj_item.id=100000*data_arr[subtask_dropdown].id+data_arr[subtask_dropdown].subtask.length+1;
+    obj_item.categories=data_arr[subtask_dropdown].categories;
     data_arr[subtask_dropdown].subtask.unshift(obj_item);
     show_elements(data_arr);
     document.getElementById("enter_task").value = "";
-
+    show_activelogs("Added New Child task.");
 }
 }
 function show_elements(data_arr) {
@@ -47,10 +49,13 @@ function show_elements(data_arr) {
     category_dropdown_list();
     subtask_dropdown_list();
     date_update_as_text_input();
+    show_backlogs();
 }
 
 
 function delete_item(id) {
+    show_activelogs("Deleted main task named:"+data_arr[id].task);
+
     data_arr.splice(id, 1);
     show_elements(data_arr);
 }
@@ -66,6 +71,8 @@ function update_item(id) {
     let update_item = document.getElementById("update_task");
     data_arr[id].task = update_item.value;
     show_elements(data_arr);
+    show_activelogs("Edited main task named:"+data_arr[id].task);
+
 }
 function date_update_as_text_input(){
     let input_text_box=document.getElementById("enter_task");
@@ -78,6 +85,8 @@ function date_update_as_text_input(){
     var inputstring=input_text_box.value;
        var inputstring= inputstring.replace('tomorrow','');
     input_text_box.value=inputstring;
+    show_activelogs("Took tommorow keyword as date.");
+
 }
     }
 }
@@ -95,9 +104,13 @@ function mark_as_done_undone(id){
     strike_off_task+='</s>';    
     item_to_edit.innerHTML=strike_off_task
     data_arr[id].check_as_done_undone=true;
+    show_activelogs("Subtask Named:"+data_arr[id].task+" Unmarked");
+ 
 }else{
     item_to_edit.innerHTML=data_arr[id].task;
     data_arr[id].check_as_done_undone=false;
+    show_activelogs("Subtask Named:"+data_arr[id].task+" marked");
+ 
 }
 store_todo_array_in_local_storage(data_arr);
 }
@@ -129,7 +142,6 @@ function category_list_show_left(){
     for(i=0;i<category_arr.length;i++){
         category_list.innerHTML+='<button class="category_list" id="category_button_'+i+'" onclick="filter_by_category('+i+')">'+category_arr[i]+'</button>';
     }
-    console.log(category_list.innerText);
 }
 
 function clearstorage(){
@@ -151,7 +163,10 @@ function Create_new_category(){
     console.log(cat_entry.value);
     category_arr.push(cat_entry.value);
     set_categories_in_local_storage(category_arr);
-    show_elements(data_arr);}
+    show_elements(data_arr);
+    show_activelogs("New Category created named:"+cat_entry.value);
+
+}
 }
 
 function filter_by_category(id){
@@ -165,6 +180,8 @@ function filter_by_category(id){
     show_elements(data_arr);
     else
     show_elements(cat_arr);
+    show_activelogs("Category Filter Applied for "+cat_value_for_filter.innerText);
+
 }
 
 
@@ -201,6 +218,8 @@ function filter_by_priority(){
     show_elements(data_arr);
     else
     show_elements(prio_arr);
+    show_activelogs("Filter by priority:"+priority_value_for_filter.value);
+
 }
 function sort_by_priority(){
     
@@ -209,14 +228,15 @@ function sort_by_priority(){
         // Define priority order
         return priorityOrder[a.priority] - priorityOrder[b.priority];
       });
-      show_elements(sorted_by_pro);  
+      show_elements(sorted_by_pro); 
+      show_activelogs("Sort by priority LOW to HIGH");
+ 
 }
 
 //-------------------------------------filter by duedate-----------------------------
 function filter_by_due_date(){
     let start_date=document.getElementById("due_date_start").value;
     let end_date=document.getElementById("due_date_end").value;
-    console.log(start_date+"  "+end_date);
     if(start_date!="" && end_date!=""){
     let starting_date=Date.parse(start_date);
     let ending_date=Date.parse(end_date);
@@ -227,6 +247,8 @@ function filter_by_due_date(){
         date_arr.push(elem);
     });
     show_elements(date_arr);
+    show_activelogs("Filtered By Due date:");
+
 }
 }
 
@@ -237,7 +259,9 @@ function sort_by_due_date(){
         return new Date(b.duedate) - new Date(a.duedate);
       });
       show_elements(sorted_by_due_date);  
-}
+      show_activelogs("Sorted by Due Date");
+
+    }
 
 //----------------------------------------subtask---------------------------------------
 function subtask_dropdown_list(){
@@ -252,7 +276,7 @@ function show_sub_task_elements(arr,id){
     for (let i = 0; i < arr.length; i++) {
         if(arr[i].check_as_done_undone)
         list_view_for_subtask.innerHTML
-+='<div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '"><s>' + arr[i].task + '</s></h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask(' +id+","+ i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+i+'">Tags:</div></h4></div></div></div>'
++='<div  style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '"><s>' + arr[i].task + '</s></h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask(' +id+","+ i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+i+'">Tags:</div></h4></div></div></div>'
     else{
         list_view_for_subtask.innerHTML
         += '<div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '">' + arr[i].task + '</h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask('+id+"," + i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+i+'">Tags:</div></h4></div></div></div>'
@@ -262,8 +286,11 @@ function show_sub_task_elements(arr,id){
 }
 }
 function sub_task_delete(parent_id,child_id){
+    
+    show_activelogs("Subtask deleted Named:"+data_arr[parent_id].subtask[child_id].task);
     data_arr[parent_id].subtask.splice(child_id, 1);
     show_elements(data_arr);
+
 }
 
 
@@ -273,11 +300,14 @@ function edit_item_subtask(parent_id,child_id) {
     let inner_text = item_to_edit.innerText;
     item_to_edit.outerHTML = '<input type="text" class="text_box" id="update_task_sub" value="' + inner_text + '">';
     button_to_update.outerHTML = '<button type="submit" name="Edit" class="save_button_style" id="edit_item_btn_sub' + child_id + '" onclick="update_item_subtask('+parent_id+","+ child_id+ ')">Update</button>';
+
 }
 function update_item_subtask(parent_id,child_id) {
     let update_item = document.getElementById("update_task_sub");
     data_arr[parent_id].subtask[child_id].task = update_item.value;
     show_elements(data_arr);
+    show_activelogs("Updated Subtask Named:"+data_arr[parent_id].subtask[child_id].task);
+   
 }
 function mark_as_done_undone_subtask(parent_id,child_id){
     let item_to_edit = document.getElementById("visual_data_here_sub" + child_id);
@@ -287,9 +317,47 @@ function mark_as_done_undone_subtask(parent_id,child_id){
      strike_off_task+='</s>';    
      item_to_edit.innerHTML=strike_off_task
      data_arr[parent_id].subtask[child_id].check_as_done_undone=true;
- }else{
+     show_activelogs("Subtask Named:"+data_arr[parent_id].subtask[child_id].task+" marked");
+ 
+    }else{
      item_to_edit.innerHTML=data_arr[parent_id].subtask[child_id].task;
      data_arr[parent_id].subtask[child_id].check_as_done_undone=false;
- }
- store_todo_array_in_local_storage(data_arr);   
+     show_activelogs("Subtask Named:"+data_arr[parent_id].subtask[child_id].task+" unmarked");
+ 
+    }
+ store_todo_array_in_local_storage(data_arr);
+      
+}
+
+//-----------------------------------------------------------activelogs---------------------------
+function show_activelogs(task_update){
+    let elem=document.getElementById("active_logs");
+    elem.innerHTML+='<li>'+task_update+'</li>';
+}
+//----------------------------------------------------------backlogs-------------------------------
+function show_backlogs(){
+    let missed_task=document.getElementById("back_logs_missed");
+    let pending_task=document.getElementById("back_logs_pending");
+    pending_task.innerHTML='';
+    missed_task.innerHTML='';
+    let today = new Date();
+        let tod=Date.parse(today);
+    data_arr.forEach((elem)=>{
+        const duedate=Date.parse(elem.duedate);
+        if(duedate>=tod){
+            pending_task.innerHTML+='<li>'+elem.task+'</li>';
+        }else{
+            missed_task.innerHTML+='<li>'+elem.task+'</li>';
+        }
+    if(elem.subtask.length>0){
+        elem.subtask.forEach((e)=>{
+            const duedatesub=Date.parse(e.duedate);
+            if(duedatesub>=tod){
+                pending_task.innerHTML+='<li>'+e.task+'</li>';
+            }else{
+                missed_task.innerHTML+='<li>'+e.task+'</li>';
+            }
+        });
+    }
+    });
 }
