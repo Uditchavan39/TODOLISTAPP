@@ -101,13 +101,12 @@ html{
         width: 100%;
     }
     .category{
-        width: 15%;
-        margin-left: 25px;
+        width: auto;
+        margin: auto;
     }
     .category_list{
     border: solid;
     width: 80%;
-    min-width: 200px;
     min-height: 25px;
     margin: auto;
     height: auto;
@@ -121,7 +120,8 @@ html{
     background-color: aliceblue;
 }
 .priority{
-    width: 90%;margin: auto;
+    width: 90%;
+    margin-left: auto;
     padding-left: 15px;
     padding-right: 15px;
     border-bottom: solid;
@@ -134,20 +134,25 @@ input:invalid {
   .tag_box{
     min-width: 100px;
     min-height: 20px;
-    
+    width: auto;
   }
   .tags_style{
     word-wrap: break-word;
+    width: auto;
   }
   .subtask{
     background-color: yellow;
     padding-left: 20px;
     border-radius: 20px;
+    width: auto;
+    margin: auto;
   }
   .activelogs_backlogs{
     min-width: 25%;
     display: flex;
     flex-direction: column;
+    border: solid;
+    border-radius: 20px;
   }
   #back_logs_missed{
     color: red;
@@ -157,4 +162,12 @@ input:invalid {
     height: 25px;
     align-self: center;
     margin: auto;
+}
+.create_category{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+    width: auto;
+    justify-content: center;
 }
