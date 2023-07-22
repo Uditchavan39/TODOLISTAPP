@@ -1,10 +1,9 @@
 body{
-    max-width: 1200px !important;
     background-color: bisque;
     margin: auto;
     height: 100%;
     border-radius: 20px;
-    min-height: 400px;
+
 }
 h1{
     text-align: center;
@@ -15,8 +14,7 @@ html{
     background-color: white;
 }
 .show_List_todo{
-    border: solid;
-    width: 85%;
+    width: 90%;
     margin: auto;
     padding-left: 15px;
     padding-right: 15px;
@@ -24,20 +22,20 @@ html{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    border: solid;
-    border-radius: 20px;
+   
 }
 .show_data{
     width: 80%;
         word-wrap: break-word;
+        margin: 10px;
 }
 .delete_button_style{
-    width: 100px;
-    height: 30px;
+    width: 70px;
+    height: 25px;
     background-color: red;
     color: white;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     border: bisque;
     border-radius: 20px;
     align-self: center;
@@ -48,17 +46,16 @@ html{
 .text_box_and_save{
     justify-content: center;
    width: auto;
-    margin: auto;
     align-self: center;
     text-align: center;
 }
 .save_button_style{
-    width: 100px;
-    height: 30px;
+    width: 70px;
+    height: 25px;
     background-color: #4CAF50;
     color: white;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     border: bisque;
     border-radius: 20px;
     align-self: center;
@@ -68,12 +65,12 @@ html{
     background-color: green;
 }
 .edit_button_style{
-    width: 100px;
-    height: 30px;
+    width: 70px;
+    height: 25px;
     background-color: blue;
     color: white;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     border: bisque;
     border-radius: 20px;
     align-self: center;
@@ -92,3 +89,58 @@ html{
     padding-right: 10px;
     font-size: 16px;
 }
+.mark_as_done{
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        align-self: center;  
+    }
+    .above_category{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+    .category{
+        width: 15%;
+        margin-left: 25px;
+    }
+    .category_list{
+    border: solid;
+    width: 80%;
+    min-width: 200px;
+    min-height: 25px;
+    margin: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: solid;
+    background-color: antiquewhite;
+}
+.category_list:hover{
+    background-color: aliceblue;
+}
+.priority{
+    width: 90%;margin: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: solid;
+    border-radius: 20px;
+    padding-top: 0;
+}
+input:invalid {
+    border: 1px solid red;
+  }
+  .tag_box{
+    min-width: 100px;
+    min-height: 20px;
+    
+  }
+  .tags_style{
+    word-wrap: break-word;
+  }
+  .subtask{
+    min-height: 200px;
+    background-color: yellow;
+    padding-left: 20px;
+  }

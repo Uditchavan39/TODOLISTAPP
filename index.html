@@ -6,19 +6,97 @@
     </title>
 
 </head>
-<body onload="fetch_data()">
-<h1>TO DO LIST APP</h1>
-<div class="text_box_and_save">
-    <input type="text" class="text_box" placeholder="Enter Task TODO" id="enter_task">
-    <button type="submit" name="save" class="save_button_style" onclick="add_item()">Save</button>
-</div>
 
-<div id="list_view">
+<body onload="show_elements(data_arr)">
+    <button onclick="clearstorage()">Local storage Clear</button>
+    <h1>TO DO LIST APP</h1>
+    <div class="above_category">
+        <div>
+            <div class="category">
+                <h2>Categories</h2>
+                <div id="category_list"></div>
+                <input type="text" placeholder="Create New Category" id="create_category">
+                <button type="submit" name="save" class="save_button_style"
+                    onclick="Create_new_category()">Create</button>
 
-</div>
-<!-----Text box with save button-->
+            </div>
+            <div class="priority">
+                <h2>Priority</h2>
+                <select name="Priority" id="priority_left">
+                    <option value="low">LOW</option>
+                    <option value="medium">MEDIUM</option>
+                    <option value="high">HIGH</option>
+                    <option value="all">ALL</option>
+                </select>
+                <button type="submit" name="save" class="save_button_style"
+                    onclick="filter_by_priority()">Filter</button>
+                <button type="submit" name="save" class="save_button_style" onclick="sort_by_priority()">Sort</button>
 
-<script src="home.js"></script>
+            </div>
+            <div class="Duedate">
+                <h2>Due Date</h2>
+                <input type="date" id="due_date_start" name="DueDate">
+                <input type="date" id="due_date_end" name="DueDate">
+                <button type="submit" name="save" class="save_button_style"
+                    onclick="filter_by_due_date()">Filter</button>
+                <button type="submit" name="save" class="save_button_style" onclick="sort_by_due_date()">Sort</button>
+
+            </div>
+
+
+        </div>
+        <div style="width: 80%;">
+            <div class="text_box_and_save">
+                <input type="text" class="text_box" placeholder="Enter Task TODO" id="enter_task">
+                <input type="date" id="due_date" name="DueDate">
+                <button type="submit" name="save" class="save_button_style" onclick="add_item()">Save</button>
+            </div>
+            <div style="padding-bottom: 10px; width: auto;height: auto; margin-left: 15px; display: flex; flex-direction: row;">
+                <label for="Priority">Priority:</label>
+                <select name="Priority" id="priority">
+                    <option value="low">LOW</option>
+                    <option value="medium">MEDIUM</option>
+                    <option value="high">HIGH</option>
+                </select>
+                <label for="Category">Category:</label>
+                <select name="Category" id="category_dynamic_item_add">
+                </select>
+                <label for="tags">Tags:</label>
+                <input type="text" class="tag_box" placeholder="Enter space separated Tags" id="enter_tags">
+                <label for="subtask">Add as a Subtask to:</label>
+                <select name="subtask_add" id="add_as_subtask_to">
+                </select>
+               
+            </div>
+            <div id="list_view">
+            </div>
+        </div>
+    </div>
+    <!-----Text box with save button-->
+
+
+    <div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;">
+        <div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+'
+                onclick="mark_as_done_undone('+i+')">
+            <h2 class="show_data" id="visual_data_here_' + i + '"><s>' + data_arr[i].task + '</s></h2> <button
+                type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_' + i + '"
+                onclick="edit_item(' + i + ')">Edit</button> <button type="submit" name="delete"
+                class="delete_button_style" id="" onclick="delete_item(' + i + ')">Delete</button>
+        </div>
+        <div style="display: flex; flex-direction: row;">
+            <div class="priority">
+                <h4>Priority: '+data_arr[i].priority+'<br>Due Date:'+data_arr[i].duedate+' </h4>
+            </div>
+            <div class="priority">
+                <h4>Category: '+data_arr[i].categories+'<br>
+                    <div class="tags_style" id="tags_add_here_'+i+'">Tags:</div>
+                </h4>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="home.js"></script>
 </body>
 
 
