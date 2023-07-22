@@ -195,6 +195,7 @@ function add_tags_to_data_arr(obj_item){
 }
 
 function visualize_tags(obj_item , id){
+    console.log(obj_item);
     let tag_show_elem=document.getElementById("tags_add_here_"+id);
     if(obj_item.Tags.length!=0){
         obj_item.Tags.forEach((elem)=>{
@@ -273,15 +274,16 @@ function subtask_dropdown_list(){
 }
 function show_sub_task_elements(arr,id){
     let list_view_for_subtask=document.getElementById("subtask_list_"+id);
+  console.log("arr chck"+arr);
     for (let i = 0; i < arr.length; i++) {
         if(arr[i].check_as_done_undone)
         list_view_for_subtask.innerHTML
-+='<div  style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '"><s>' + arr[i].task + '</s></h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask(' +id+","+ i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+i+'">Tags:</div></h4></div></div></div>'
++='<div  style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '"><s>' + arr[i].task + '</s></h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask(' +id+","+ i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+id+'_sub_'+i+'">Tags:</div></h4></div></div></div>'
     else{
         list_view_for_subtask.innerHTML
-        += '<div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '">' + arr[i].task + '</h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask('+id+"," + i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+i+'">Tags:</div></h4></div></div></div>'
+        += '<div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '">' + arr[i].task + '</h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask('+id+"," + i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+id+'_sub_'+i+'">Tags:</div></h4></div></div></div>'
     }
-  //  visualize_tags(data_arr[i],i);
+    visualize_tags_subtask(arr[i],i,id);
  // show_sub_task_elements(data_arr[i].subtask,i);
 }
 }
@@ -328,6 +330,15 @@ function mark_as_done_undone_subtask(parent_id,child_id){
  store_todo_array_in_local_storage(data_arr);
       
 }
+function visualize_tags_subtask(obj_item , child_id,parent_id){
+    let tag_show_sub=document.getElementById("tags_add_here_"+parent_id+"_sub_"+child_id);
+    if(obj_item.Tags.length!=0){
+        obj_item.Tags.forEach((elem)=>{
+            tag_show_sub.innerHTML+=elem+" ";
+        });
+    }
+}
+
 
 //-----------------------------------------------------------activelogs---------------------------
 function show_activelogs(task_update){
@@ -360,4 +371,41 @@ function show_backlogs(){
         });
     }
     });
+}
+
+//-----------------------------------------------search------------------------------
+function search_through_task(){
+    let search_text=document.getElementById("search").value;
+    let arr=[];
+    for(i=0;i<data_arr.length;i++){
+        let include_in_tag_or_name=false;
+        data_arr[i].Tags.forEach((el)=>{
+            if(el.includes(search_text))
+            include_in_tag_or_name=true;
+        });
+        if(data_arr[i].task.includes(search_text) || include_in_tag_or_name){
+            arr.unshift(data_arr[i]);
+        }    
+    if(data_arr[i].subtask.length>0){   
+        sub_arr=data_arr[i].subtask;
+            for(j=0;j<sub_arr.length;j++){
+                let include_in_tag_or_name_sub=false;
+                sub_arr[j].Tags.forEach((el)=>{
+                    if(el.includes(search_text))
+                        include_in_tag_or_name_sub=true;    
+                });
+             
+                if(sub_arr[j].task.includes(search_text) || include_in_tag_or_name_sub){
+                    arr.unshift(sub_arr[j]);
+                }
+                
+        }
+    }
+}
+
+    if(search_text==""){
+        show_elements(data_arr);
+    }else{
+        show_elements(arr);
+    }
 }

@@ -140,9 +140,9 @@ input:invalid {
     word-wrap: break-word;
   }
   .subtask{
-    min-height: 200px;
     background-color: yellow;
     padding-left: 20px;
+    border-radius: 20px;
   }
   .activelogs_backlogs{
     min-width: 25%;
@@ -152,3 +152,9 @@ input:invalid {
   #back_logs_missed{
     color: red;
   }
+  #search{
+    width: auto;
+    height: 25px;
+    align-self: center;
+    margin: auto;
+}

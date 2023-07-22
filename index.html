@@ -10,6 +10,9 @@
 <body onload="show_elements(data_arr)">
     <button onclick="clearstorage()">Local storage Clear</button>
     <h1>TO DO LIST APP</h1>
+    <div style="display: flex; flex-direction: row;">
+    <input type="text" id="search" onkeyup="search_through_task()" placeholder="Search for tasks..">
+</div>
     <div class="above_category">
         <div>
             <div class="category">
