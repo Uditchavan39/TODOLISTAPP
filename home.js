@@ -278,13 +278,15 @@ function show_sub_task_elements(arr,id){
     for (let i = 0; i < arr.length; i++) {
         if(arr[i].check_as_done_undone)
         list_view_for_subtask.innerHTML
-+='<div  style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '"><s>' + arr[i].task + '</s></h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask(' +id+","+ i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+id+'_sub_'+i+'">Tags:</div></h4></div></div></div>'
++='<div draggable="true" class="main_cont_for_drag" style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;" ><div class="show_List_todo"><input type="checkbox" checked class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_'+id+'_sub'+i+'"><s>'+arr[i].task + '</s></h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_'+id+'_sub_'+i+'" onclick="edit_item_subtask(' +id+","+ i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+id+'_sub_'+i+'">Tags:</div></h4></div></div></div>'
     else{
         list_view_for_subtask.innerHTML
-        += '<div style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_sub' + i + '">' + arr[i].task + '</h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_sub' + i + '" onclick="edit_item_subtask('+id+"," + i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+id+'_sub_'+i+'">Tags:</div></h4></div></div></div>'
++= '<div draggable="true" class="main_cont_for_drag" style="display: flex; flex-direction: column; border: solid;border-radius: 20px; width: 90%;"><div class="show_List_todo"><input type="checkbox" class="mark_as_done" id="check_box_checked_"'+i+' onclick="mark_as_done_undone_subtask('+id+","+i+')"><h2 class="show_data" id="visual_data_here_'+id+'_sub'+i+'">' + arr[i].task + '</h2> <button type="submit" name="Edit" class="edit_button_style" id="edit_item_btn_'+id+'_sub_'+i+'" onclick="edit_item_subtask('+id+"," + i + ')">Edit</button> <button type="submit" name="delete"class="delete_button_style" id="" onclick="sub_task_delete('+id+"," + i + ')">Delete</button></div><div style="display: flex; flex-direction: row;"><div class="priority"><h4>Priority: '+arr[i].priority+'<br>Due Date:'+arr[i].duedate+' </h4></div><div class="priority"><h4>Category: '+arr[i].categories+'<br><div class="tags_style" id="tags_add_here_'+id+'_sub_'+i+'">Tags:</div></h4></div></div></div>'
     }
     visualize_tags_subtask(arr[i],i,id);
  // show_sub_task_elements(data_arr[i].subtask,i);
+ var cols = document.querySelectorAll('#subtask_list_'+id+' .main_cont_for_drag');
+ [].forEach.call(cols, addDnDHandlers);
 }
 }
 function sub_task_delete(parent_id,child_id){
@@ -297,12 +299,12 @@ function sub_task_delete(parent_id,child_id){
 
 
 function edit_item_subtask(parent_id,child_id) {
-    let item_to_edit = document.getElementById("visual_data_here_sub" + child_id);
-    let button_to_update = document.getElementById("edit_item_btn_sub" + child_id);
+    let item_to_edit = document.getElementById("visual_data_here_"+parent_id+"_sub" + child_id);
+    let button_to_update = document.getElementById("edit_item_btn_"+parent_id+'_sub_'+child_id);
     let inner_text = item_to_edit.innerText;
     item_to_edit.outerHTML = '<input type="text" class="text_box" id="update_task_sub" value="' + inner_text + '">';
     button_to_update.outerHTML = '<button type="submit" name="Edit" class="save_button_style" id="edit_item_btn_sub' + child_id + '" onclick="update_item_subtask('+parent_id+","+ child_id+ ')">Update</button>';
-
+    console.log("edit id :"+parent_id+" "+chi)
 }
 function update_item_subtask(parent_id,child_id) {
     let update_item = document.getElementById("update_task_sub");
@@ -312,7 +314,7 @@ function update_item_subtask(parent_id,child_id) {
    
 }
 function mark_as_done_undone_subtask(parent_id,child_id){
-    let item_to_edit = document.getElementById("visual_data_here_sub" + child_id);
+    let item_to_edit = document.getElementById("visual_data_here_"+parent_id+"_sub" + child_id);
     if(!data_arr[parent_id].subtask[child_id].check_as_done_undone){
      let strike_off_task='<s>';
      strike_off_task+=item_to_edit.innerHTML;
@@ -352,18 +354,19 @@ function show_backlogs(){
     pending_task.innerHTML='';
     missed_task.innerHTML='';
     let today = new Date();
-        let tod=Date.parse(today);
-    data_arr.forEach((elem)=>{
-        const duedate=Date.parse(elem.duedate);
-        if(duedate>=tod){
+    const format_date=today.toISOString().slice(0,10);
+   data_arr.forEach((elem)=>{
+        const duedate=elem.duedate;
+        console.log(duedate.valueOf()+" " +format_date.valueOf());
+        if(duedate.valueOf()>=format_date.valueOf()){
             pending_task.innerHTML+='<li>'+elem.task+'</li>';
         }else{
             missed_task.innerHTML+='<li>'+elem.task+'</li>';
         }
     if(elem.subtask.length>0){
         elem.subtask.forEach((e)=>{
-            const duedatesub=Date.parse(e.duedate);
-            if(duedatesub>=tod){
+            const duedatesub=e.duedate;
+            if(duedatesub.valueOf()>=format_date.valueOf()){
                 pending_task.innerHTML+='<li>'+e.task+'</li>';
             }else{
                 missed_task.innerHTML+='<li>'+e.task+'</li>';
@@ -409,3 +412,58 @@ function search_through_task(){
         show_elements(arr);
     }
 }
+
+
+//------------------------------------------------Drag and drop--------------------
+var dragSrcEl = null;
+
+function handleDragStart(e) {
+  dragSrcEl = this;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', this.outerHTML);
+  this.classList.add('dragElem');
+}
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault(); 
+  }
+  this.classList.add('over');
+
+  e.dataTransfer.dropEffect = 'move'; 
+  return false;
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('over');
+}
+function handleDragEnter(e) {
+    }
+function handleDrop(e) {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+
+  if (dragSrcEl != this) {
+    this.parentNode.removeChild(dragSrcEl);
+    var dropHTML = e.dataTransfer.getData('text/html');
+    this.insertAdjacentHTML('beforebegin',dropHTML);
+    var dropElem = this.previousSibling;
+    addDnDHandlers(dropElem);
+  }
+  this.classList.remove('over');
+  return false;
+}
+
+function handleDragEnd(e) {
+  this.classList.remove('over');
+}
+
+function addDnDHandlers(elem) {
+  elem.addEventListener('dragstart', handleDragStart, false);
+  elem.addEventListener('dragenter', handleDragEnter, false)
+  elem.addEventListener('dragover', handleDragOver, false);
+  elem.addEventListener('dragleave', handleDragLeave, false);
+  elem.addEventListener('drop', handleDrop, false);
+  elem.addEventListener('dragend', handleDragEnd, false);
+}
+
